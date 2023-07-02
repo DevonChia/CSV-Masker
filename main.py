@@ -2,7 +2,7 @@ import os
 import hashlib
 
 def listAffectingFiles():
-    print("Listing csv files in 'to_mask' folder that will be processed...")
+    print("Listing csv file(s) in 'to_mask' folder that will be processed...")
     basepath = 'to_mask/'
     count = 1
     files = []
@@ -57,6 +57,9 @@ def mask(row,selCols,file,type='others'):
 
 def main():
     files = listAffectingFiles()
+    if len(files) == 0:
+        print("No csv files found in 'to_mask' folder. Please try again.\nProgram exited.")
+        return
     delimiterObj = {
         "1" : ",",
         "2" : "|",
@@ -65,7 +68,7 @@ def main():
     print("""
 Note for masking data:
 - MOBILE masking will replace last 4 digits to '1234'. 
-- OTHERS (e.g for Name, NRIC, etc.) masking will encrypt entire content using SHA-256 with added original content length.
+- OTHERS (e.g for Name, NRIC, sensitive data, etc.) masking will encrypt entire content using SHA-256 with added original content length.
 
 Selecting column(s) to mask:
 - Enter a number to select DELIMITER (e.g 1 - ',' or comma, 2 - '|' or pipe, 3 - '\\t' or tab).
@@ -93,7 +96,7 @@ Selecting column(s) to mask:
             print('Program exited.')
             return
         elif mnoCols == '0':
-            print('Skip masking for MOBILE')
+            print('Skip masking for MOBILE.')
             skipMobile = 1
             break
         mnoCols = mnoCols.replace(" ","")
@@ -107,7 +110,7 @@ Selecting column(s) to mask:
             print('Program exited.')
             return
         elif mnoCols == '0':
-            print('Skip masking for OTHERS')
+            print('Skip masking for OTHERS.')
             skipOthers = 1
             break
         otherCols = otherCols.replace(" ","")
