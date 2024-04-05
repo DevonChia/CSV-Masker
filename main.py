@@ -2,7 +2,7 @@ import os
 import hashlib
 
 def listAffectingFiles():
-    print("Listing csv file(s) in 'to_mask' folder that will be processed...")
+    print("Listing csv file(s) in 'to_mask' folder that will be processed...!")
     basepath = 'to_mask/'
     count = 1
     files = []
